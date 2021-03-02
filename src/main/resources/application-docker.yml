@@ -1,0 +1,8 @@
+server:
+  port: 8080
+  undertow:
+    worker-threads: 256
+    
+spring:
+  main:
+    banner-mode: "off"

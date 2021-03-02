@@ -1,0 +1,46 @@
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: reciclagem
+  labels:
+    name: reciclagem
+    type: api
+spec:
+  replicas: 2
+  revisionHistoryLimit: 10
+  strategy:
+    rollingUpdate:
+      maxSurge: 50%
+      maxUnavailable: 50%
+    type: RollingUpdate  
+  template:
+    metadata:
+      annotations:
+        gitlab.lojasrenner/ci_commit_sha: "@CI_COMMIT_SHA@"
+      labels:
+        name: reciclagem
+    spec:
+      imagePullSecrets:
+      - name: lojasrennerregistry
+      containers:
+      - name: reciclagem
+        image: docker-repo.lojasrenner.com.br:5000/realizecfi/reciclagem
+        imagePullPolicy: "Always"
+        envFrom:
+        - configMapRef:
+            name: reciclagem-config
+            optional: true
+        env:
+        - name: JAVA_OPTIONS
+          value: -Duser.country=BR -Duser.language=pt -XX:NewRatio=3 
+        resources:
+          limits:
+            cpu: 2
+            memory: 512Mi
+          requests:
+            cpu: 100m
+            memory: 195Mi
+        ports:
+          - name: app
+            containerPort: 8080

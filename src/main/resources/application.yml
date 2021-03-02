@@ -1,0 +1,30 @@
+logging:
+  level:
+    br.com.realizecfi: INFO
+    org.springframework.boot: INFO
+
+server:
+  compression:
+    enabled: true
+  port: 0
+  servlet:
+    context-path: /reciclagem # FIXME
+
+spring:
+  jackson:
+    time-zone: America/Sao_Paulo
+  jmx:
+    enabled: false
+  messages:
+    basename: i18n/messages
+
+springfox:
+  documentation:
+    info:
+      title: reciclagem
+      description: Documentação do serviço de reciclagem.
+      version: 1.0
+    base-package: br.com.realizecfi.reciclagem
+    apis:
+      - name: Api
+        description: Serviços para ...
